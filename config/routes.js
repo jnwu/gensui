@@ -6,10 +6,10 @@ module.exports = function (app) {
 	app.get('/', controllers.index);
 	
 	app.get('/things', thing.read);
-	app.get('/thing/:id', thing.read);
+	app.get('/thing/:name', thing.read);
 	app.post('/thing', thing.create);
 
-	app.get('/thing/:tid/events', event.read);
-	app.get('/thing/:tid/event/:id', event.read);
-	app.post('/thing/:tid/event', event.create);
+	app.get('/thing/:name/events', event.read);
+	app.get('/thing/:name/event/:id', event.read);
+	app.post('/thing/:name/event', event.create);
 }

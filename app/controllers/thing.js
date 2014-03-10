@@ -2,8 +2,8 @@ var mongoose = require('mongoose')
 	, Thing = mongoose.model('Thing');
 
 exports.read = function(req, res){
-	if(req.params.id) {
-		Thing.find({ _id: req.params.id }, function(err, result) {
+	if(req.params.name) {
+		Thing.find({ name: req.params.name }, function(err, result) {
 			if(err){
 				res.json(err);
 			} else {
@@ -11,7 +11,7 @@ exports.read = function(req, res){
 			}
 		});
 	} else {
-		Thing.find({ _id: req.params.id }, function(err, result) {
+		Thing.find(function(err, result) {
 			if(err){
 				res.json(err);
 			} else {
@@ -22,11 +22,15 @@ exports.read = function(req, res){
 };
 
 exports.create = function(req, res){
-	var a = new Thing({ following: req.body.thing.following });
-	a.save(function(err) {
+	var s = new Thing({ 
+		name: req.body.thing.name, 
+		following: req.body.thing.following 
+	});
+
+	s.save(function(err) {
 		if(err) {
 			res.json(err);
 		}
 	});
-	res.json(a);
+	res.json(s);
 };
