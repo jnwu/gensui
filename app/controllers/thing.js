@@ -4,19 +4,13 @@ var mongoose = require('mongoose')
 exports.read = function(req, res){
 	if(req.params.name) {
 		Thing.find({ name: req.params.name }, function(err, result) {
-			if(err){
-				res.json(err);
-			} else {
-				res.json(result);
-			}
+			if(err) res.json(err); 
+			else res.json(result);
 		});
 	} else {
 		Thing.find(function(err, result) {
-			if(err){
-				res.json(err);
-			} else {
-				res.json(result);
-			}
+			if(err) res.json(err); 
+			else res.json(result);
 		});
 	}
 };
@@ -28,9 +22,25 @@ exports.create = function(req, res){
 	});
 
 	s.save(function(err) {
-		if(err) {
-			res.json(err);
-		}
+		if(err) res.json(err);
 	});
 	res.json(s);
+};
+
+exports.update = function(req, res){
+	if(req.params.name) {
+		Thing.find({ name: req.params.name }, function(err, result) {
+			if(err) res.json(err); 
+			else {
+				result[0].following = result[0].following.concat(req.body.thing.following);
+				result[0].save(function(err) {
+					if(err) res.json(err);
+				});
+
+				res.json(result);
+			}
+		});
+	} else {
+
+	}
 };

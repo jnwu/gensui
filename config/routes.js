@@ -8,6 +8,7 @@ module.exports = function (app) {
 	app.get('/things', thing.read);
 	app.get('/thing/:name', thing.read);
 	app.post('/thing', thing.create);
+	app.post('/thing/:name', thing.update);
 
 	app.get('/thing/:name/events', event.read);
 	app.get('/thing/:name/event/:id', event.read);
