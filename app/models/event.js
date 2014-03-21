@@ -3,7 +3,8 @@ var mongoose = require('mongoose')
 
 EventSchema = new Schema({
 	thing_name: String,
-	message:  String
+	message:  String,
+	created: { type: Date, default: Date.now }
 });
 
 EventSchema.methods = {

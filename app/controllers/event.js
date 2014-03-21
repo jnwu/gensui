@@ -31,7 +31,9 @@ exports.read = function(req, res){
 				fiber.run(result);
 			});
 			
-			res.json(events.concat(Fiber.yield()));
+			events = events.concat(Fiber.yield());
+			events.sort(function(a, b) { return new Date(b.created) - new Date(a.created); });
+			res.json(events);
 		}).run();
 	} else if(req.params.name && req.params.id){
 		Event.find({ _id: req.params.id, thing_name: req.params.name }, function(err, result) {
