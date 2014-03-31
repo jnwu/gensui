@@ -1,10 +1,12 @@
-var path = require('path');
-var express = require('express');
-var app = require ('../app');
+var path = require('path')
+	, express = require('express')
+	, app = require ('../app')
+	, cors = require('cors');
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, '/../app/views'));
 app.set('view engine', 'ejs');
+app.use(cors());
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
