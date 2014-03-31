@@ -16,15 +16,21 @@ exports.read = function(req, res){
 };
 
 exports.create = function(req, res){
-	var s = new Thing({ 
-		name: req.body.thing.name, 
-		following: req.body.thing.following 
-	});
+	if(req.body.thing.name) {
+		Thing.find({ name: req.body.thing.name }, function(err, result) {
+			if(result.length == 0) {
+				var t = new Thing({ 
+					name: req.body.thing.name, 
+					following: req.body.thing.following 
+				});
 
-	s.save(function(err) {
-		if(err) res.json(err);
-	});
-	res.json(s);
+				t.save(function(err) {
+					if(err) res.json(err);
+				});
+				res.json(t);
+			} else res.json(result);
+		});
+	}
 };
 
 exports.update = function(req, res){
@@ -40,7 +46,5 @@ exports.update = function(req, res){
 				res.json(result);
 			}
 		});
-	} else {
-
 	}
 };
