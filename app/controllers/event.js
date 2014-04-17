@@ -34,8 +34,17 @@ exports.read = function(req, res){
 			events = events.concat(Fiber.yield());
 			events.sort(function(a, b) { return new Date(b.created) - new Date(a.created); });
 
+			// Apply after if applicable
+			if (req.query.after) {
+				var i = 0;
+
+				while(i < events.length && (new Date(parseInt(req.query.after))).getTime() < (new Date(events[i].created)).getTime()) { i++; }
+				events = events.splice(0, i);
+			}	
+
 			// Apply limit if applicable
-			if (req.query.limit) events = events.splice(0, req.query.limit);
+			if (req.query.limit) events = events.splice(0, req.query.limit);			
+					
 			res.json(events);
 		}).run();
 	} else if(req.params.name && req.params.id){
